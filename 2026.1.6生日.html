@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle, #ff7eb3 0%, #ff6584 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 核心标题 - 简洁醒目 */
+        .birthday-title {
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 0 0 15px #fff, 0 0 30px #ffd700;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite alternate;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* 简洁祝福语 */
+        .wish-text {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 10px 0 30px;
+            text-shadow: 0 0 5px #0003;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* 优化后的生日蛋糕 - 双层+装饰 */
+        .cake {
+            position: relative;
+            width: 220px;
+            height: 160px;
+            margin-bottom: 40px;
+            z-index: 10;
+        }
+
+        /* 蛋糕底座（下层） */
+        .cake-base {
+            width: 100%;
+            height: 80px;
+            background: #8b4513;
+            border-radius: 15px 15px 0 0;
+            position: absolute;
+            bottom: 0;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        /* 蛋糕底座装饰 */
+        .cake-base::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: repeating-linear-gradient(90deg, #fff, #fff 15px, transparent 15px, transparent 25px);
+            opacity: 0.8;
+        }
+
+        /* 蛋糕上层 */
+        .cake-top {
+            width: 70%;
+            height: 50px;
+            background: #8b4513;
+            border-radius: 12px 12px 0 0;
+            position: absolute;
+            bottom: 70px;
+            left: 15%;
+            box-shadow: inset 0 -3px 8px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        /* 上层奶油装饰 */
+        .cake-top::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, #fff, #fff 10px, transparent 10px, transparent 18px);
+            opacity: 0.8;
+        }
+
+        /* 奶油层 */
+        .cake-cream {
+            width: 95%;
+            height: 15px;
+            background: #fff;
+            border-radius: 8px;
+            position: absolute;
+            bottom: 65px;
+            left: 2.5%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+        .cake-cream-top {
+            width: 75%;
+            height: 12px;
+            background: #fff;
+            border-radius: 6px;
+            position: absolute;
+            bottom: 115px;
+            left: 12.5%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+
+        /* 装饰糖粒 */
+        .sprinkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #ffd700;
+            z-index: 4;
+        }
+
+        /* 蜡烛（修复穿模 - 调整位置+层级） */
+        .candle {
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(90deg, #ff4500, #ff6347);
+            position: absolute;
+            top: 0; /* 关键修改：从10px改为0，避免穿进蛋糕 */
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px 6px 0 0;
+            box-shadow: 0 0 3px rgba(0,0,0,0.2);
+            z-index: 5; /* 确保蜡烛在蛋糕所有层之上 */
+        }
+        /* 蜡烛底部装饰 */
+        .candle::before {
+            content: "";
+            width: 16px;
+            height: 4px;
+            background: #fff;
+            border-radius: 2px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 火焰动画（更自然） */
+        .flame {
+            width: 18px;
+            height: 30px;
+            background: radial-gradient(circle, #fff 0%, #ffd700 30%, #ff4500 80%);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flame 0.8s infinite alternate;
+            filter: blur(1px);
+            z-index: 6; /* 火焰层级最高 */
+        }
+
+        /* 气球样式 */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 70px;
+            height: 90px;
+            background-color: #ff6b6b;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.85;
+            box-shadow: inset -8px -8px 8px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 25px;
+            background-color: #fff;
+        }
+        .balloon:nth-child(2n) { background-color: #4ecdc4; }
+        .balloon:nth-child(3n) { background-color: #ffe066; }
+        .balloon:nth-child(4n) { background-color: #98d8c8; }
+
+        /* 彩屑效果 */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            opacity: 0.8;
+            animation: confetti 5s linear infinite;
+            z-index: 5;
+        }
+
+        /* 动画定义 */
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-80vh) rotate(15deg); }
+            100% { transform: translateY(0) rotate(-15deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        @keyframes flame {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+        }
+        @keyframes confetti {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 适配手机 */
+        @media (max-width: 768px) {
+            .birthday-title { font-size: 2.2rem; }
+            .wish-text { font-size: 1rem; }
+            .cake { width: 180px; height: 130px; }
+            .candle { top: 0; height: 45px; } /* 手机端蜡烛适配 */
+            .flame { top: -22px; height: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 核心标题（可改名字） -->
+    <h1 class="birthday-title">向毛驴 生日快乐 🎂</h1>
+    
+    <!-- 简洁祝福语 -->
+    <p class="wish-text">
+        愿你岁岁欢喜，万事胜意
+    </p>
+
+    <!-- 优化后的生日蛋糕 -->
+    <div class="cake">
+        <div class="cake-base"></div>
+        <div class="cake-cream"></div>
+        <div class="cake-top"></div>
+        <div class="cake-cream-top"></div>
+        <div class="candle">
+            <div class="flame"></div>
+        </div>
+        <!-- 装饰糖粒 -->
+        <div class="sprinkle" style="left: 30%; bottom: 70px; background: #ff6b6b;"></div>
+        <div class="sprinkle" style="left: 40%; bottom: 80px; background: #4ecdc4;"></div>
+        <div class="sprinkle" style="left: 60%; bottom: 75px; background: #ffe066;"></div>
+        <div class="sprinkle" style="left: 70%; bottom: 85px; background: #ff6b6b;"></div>
+        <div class="sprinkle" style="left: 25%; bottom: 110px; background: #98d8c8;"></div>
+        <div class="sprinkle" style="left: 75%; bottom: 105px; background: #ffd700;"></div>
+    </div>
+
+    <!-- 生日歌BGM（修改为本地同文件夹的生日歌.mp3） -->
+    <audio autoplay loop muted id="birthday-music">
+        <source src="生日歌.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 生成气球
+        function createBalloons() {
+            const count = 15;
+            const body = document.body;
+            for (let i = 0; i < count; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = `${Math.random() * 90 + 5}%`;
+                balloon.style.animationDelay = `${Math.random() * 8}s`;
+                balloon.style.width = `${Math.random() * 20 + 60}px`;
+                balloon.style.height = `${Math.random() * 20 + 80}px`;
+                body.appendChild(balloon);
+            }
+        }
+
+        // 生成彩屑
+        function createConfetti() {
+            setInterval(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#ffe066', '#fff', '#98d8c8'][Math.floor(Math.random() * 5)];
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.body.appendChild(confetti);
+                
+                // 移除过期彩屑
+                setTimeout(() => confetti.remove(), 5000);
+            }, 100);
+        }
+
+        // 烟花效果
+        function createFireworks() {
+            document.body.addEventListener('click', (e) => {
+                const colors = ['#ff6b6b', '#4ecdc4', '#ffe066', '#98d8c8', '#fff', '#ffd700'];
+                const fireworkCount = 30;
+                
+                for (let i = 0; i < fireworkCount; i++) {
+                    const firework = document.createElement('div');
+                    firework.style.position = 'absolute';
+                    firework.style.width = '6px';
+                    firework.style.height = '6px';
+                    firework.style.borderRadius = '50%';
+                    firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.left = `${e.clientX}px`;
+                    firework.style.top = `${e.clientY}px`;
+                    firework.style.opacity = '1';
+                    firework.style.zIndex = '15';
+                    
+                    const angle = (i / fireworkCount) * Math.PI * 2;
+                    const distance = Math.random() * 80 + 40;
+                    const dx = Math.cos(angle) * distance;
+                    const dy = Math.sin(angle) * distance;
+                    
+                    firework.style.transition = `all ${Math.random() * 0.8 + 0.4}s ease-out`;
+                    document.body.appendChild(firework);
+                    
+                    setTimeout(() => {
+                        firework.style.transform = `translate(${dx}px, ${dy}px)`;
+                        firework.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => firework.remove(), 1000);
+                }
+            });
+        }
+
+        // 页面加载初始化
+        window.onload = function() {
+            createBalloons();
+            createConfetti();
+            createFireworks();
+            
+            // 点击解锁音乐
+            document.body.addEventListener('click', () => {
+                const music = document.getElementById('birthday-music');
+                music.muted = false;
+            });
+        };
+    </script>
+</body>
+</html>
