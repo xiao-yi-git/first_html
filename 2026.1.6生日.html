@@ -243,7 +243,7 @@
     </style>
 </head>
 <body>
-    <!-- 核心标题（可改名字） -->
+    <!-- 核心标题 -->
     <h1 class="birthday-title">向毛驴 生日快乐 🎂</h1>
     
     <!-- 简洁祝福语 -->
@@ -268,11 +268,6 @@
         <div class="sprinkle" style="left: 25%; bottom: 110px; background: #98d8c8;"></div>
         <div class="sprinkle" style="left: 75%; bottom: 105px; background: #ffd700;"></div>
     </div>
-
-    <!-- 生日歌BGM（修改为本地同文件夹的生日歌.mp3） -->
-    <audio autoplay loop muted id="birthday-music">
-        <source src="生日歌.mp3" type="first_html/audio/mpeg">
-    </audio>
 
     <script>
         // 生成气球
@@ -347,14 +342,7 @@
             createBalloons();
             createConfetti();
             createFireworks();
-            
-            // 点击解锁音乐
-            document.body.addEventListener('click', () => {
-                const music = document.getElementById('birthday-music');
-                music.muted = false;
-            });
         };
     </script>
 </body>
-
 </html>
