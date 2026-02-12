@@ -134,13 +134,13 @@
             z-index: 4;
         }
 
-        /* 蜡烛（修复穿模 - 调整位置+层级） */
+        /* 蜡烛（修复穿模 - 关键修改：改用bottom定位，匹配蛋糕层级） */
         .candle {
             width: 12px;
             height: 50px;
             background: linear-gradient(90deg, #ff4500, #ff6347);
             position: absolute;
-            top: 0; /* 关键修改：从10px改为0，避免穿进蛋糕 */
+            bottom: 120px; /* 关键修改：从top:0改为bottom:120px，立在奶油顶部 */
             left: 50%;
             transform: translateX(-50%);
             border-radius: 6px 6px 0 0;
@@ -237,18 +237,21 @@
             .birthday-title { font-size: 2.2rem; }
             .wish-text { font-size: 1rem; }
             .cake { width: 180px; height: 130px; }
-            .candle { top: 0; height: 45px; } /* 手机端蜡烛适配 */
+            .candle { 
+                bottom: 100px; /* 关键修改：手机端适配新的bottom定位 */
+                height: 45px; 
+            } 
             .flame { top: -22px; height: 25px; }
         }
     </style>
 </head>
 <body>
     <!-- 核心标题（可改名字） -->
-    <h1 class="birthday-title">Pyu 生日快乐 🎂</h1>
+    <h1 class="birthday-title">圈圈 生日快乐 🎂</h1>
     
     <!-- 简洁祝福语 -->
     <p class="wish-text">
-        愿你平安喜乐，岁岁欢畅！
+        岁岁常欢愉，年年皆胜意！
     </p>
 
     <!-- 优化后的生日蛋糕 -->
@@ -271,7 +274,7 @@
 
     <!-- 生日歌BGM（修改为本地同文件夹的生日歌.mp3） -->
     <audio autoplay loop muted id="birthday-music">
-        <source src="生日歌.mp3" type="frist_html/audio/mpeg">
+        <source src="生日歌.mp3" type="audio/mpeg"> <!-- 修正type错误：frist_html/audio/mpeg → audio/mpeg -->
     </audio>
 
     <script>
@@ -357,5 +360,3 @@
     </script>
 </body>
 </html>
-
-
